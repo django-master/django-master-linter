@@ -8,7 +8,9 @@ PYLINT_IGNORE_PATTERNS = settings.get('PYLINT_IGNORE_PATTERNS',
                                       (r'/migrations/', ))
 
 JSLINT_CMD = settings.get('JSLINT_CMD', 'jshint')
-JSLINT_IGNORE_PATTERNS = settings.get('JSLINT_IGNORE_PATTERNS', ())
+JSLINT_IGNORE_PATTERNS = settings.get('JSLINT_IGNORE_PATTERNS',
+                                      (r'/node_modules/',
+                                       r'/bower_components', ))
 
 
 class PyLintView(BaseLintView):

@@ -1,4 +1,5 @@
 from subprocess import Popen, PIPE
+import re
 import os
 
 from django.conf import settings
@@ -74,7 +75,7 @@ class BaseLintView(MasterView):
                 file_path = os.path.join(root, filename)
 
                 for pattern in self.exclude_patterns:
-                    if pattern.findall(file_path):
+                    if re.findall(pattern, file_path):
                         break  # Ignoring some folders
                 else:
                     if self.is_valid_file(file_path):
