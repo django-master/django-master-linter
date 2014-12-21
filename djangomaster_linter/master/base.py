@@ -48,7 +48,7 @@ class BaseLintView(MasterView):
     exclude_patterns = []
 
     def is_lint_installed(self):
-        return _is_installed(self.cmd)
+        return _is_installed(self.lint_cmd)
 
     def is_valid_file(self, file_path):
         return True
