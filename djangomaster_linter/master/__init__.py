@@ -14,6 +14,7 @@ JSLINT_IGNORE_PATTERNS = settings.get('JSLINT_IGNORE_PATTERNS',
 
 
 class PyLintView(BaseLintView):
+    abstract = False
     name = 'pylint'
     title = 'Py Lint'
     label = 'Py Lint'
@@ -26,6 +27,7 @@ class PyLintView(BaseLintView):
 
 
 class JsLintView(BaseLintView):
+    abstract = False
     name = 'jslint'
     title = 'JS Lint'
     label = 'JS Lint'

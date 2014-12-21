@@ -41,6 +41,7 @@ class Result(object):
 
 
 class BaseLintView(MasterView):
+    abstract = True
     template_name = 'djangomaster_linter/base.html'
     lint_cmd = None
     title = 'Lint'
