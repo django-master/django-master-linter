@@ -8,9 +8,17 @@ from djangomaster.conf import settings as master_settings
 from djangomaster.views import MasterView
 
 
+def _is_installed(cmd):
+    try:
+        resp = Popen(['which', cmd], stdout=PIPE)
+    except OSError:
+        return False
+    return resp.stdout.read().strip().endswith(cmd)
+
+
 class Result(object):
 
-    def __init__(self, file_path, cmd=master_settings.PYLINT_CMD):
+    def __init__(self, file_path, cmd):
         self._path = file_path
         self._cmd = cmd
         self._result = ''
@@ -32,12 +40,14 @@ class Result(object):
 
 
 class BaseLintView(MasterView):
-    template_name = 'djangomaster/pages/lint.html'
+    template_name = 'djangomaster_linter/base.html'
     lint_cmd = None
-    lint_is_installed = False
     title = 'Lint'
     conf_name = ''
     exclude_patterns = []
+
+    def is_lint_installed(self):
+        return _is_installed(self.cmd)
 
     def is_valid_file(self, file_path):
         return True
@@ -89,7 +99,7 @@ class BaseLintView(MasterView):
     def get_context_data(self, **kwargs):
         context = super(BaseLintView, self).get_context_data(**kwargs)
         context['page_title'] = self.title
-        context['LINT_IS_INSTALLED'] = self.lint_is_installed
+        context['LINT_IS_INSTALLED'] = self.is_lint_installed()
         context['LINT_CMD'] = self.lint_cmd
         context['ignored_patterns'] = self.exclude_patterns
         context['conf_name'] = self.conf_name
